@@ -8,18 +8,38 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var edtYear: UITextField!
+    @IBOutlet weak var lblYear: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func btnAge(_ sender: Any) {
+        getAge()
     }
-
-
+    
+    func getAge(){
+        let yearOfBirth = Int(edtYear.text!)
+        let date = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        
+        let personOfAge = year - yearOfBirth!
+        lblYear.text = "Your age is \(personOfAge)"
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        getAge()
+            self.view.endEditing(true)
+        return true
+    }
+    
 }
 
